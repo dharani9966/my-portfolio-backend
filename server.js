@@ -1,44 +1,71 @@
 // server.js
 import express from 'express';
+import dotenv from "dotenv";
+dotenv.config();
+
 import cors from 'cors';
 import { projects, about, skills, internships } from './data.js';
+import OpenAI from "openai";
 
 const app = express();
-const PORT = 5000;
 
+// Railway allows only dynamic port
+const PORT = process.env.PORT || 5000;
 
-
-// Enable CORS so frontend can access APIs from different origin
+// Middleware
 app.use(cors());
+app.use(express.json());
 
-// Basic route to confirm server is running
+// OPENAI SETUP
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
+
+// AI CHAT API (POST)
+app.post("/chat", async (req, res) => {
+  try {
+    const userMessage = req.body.message;
+
+    const ai = await client.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are Dharani Rapthadu’s portfolio AI assistant. " +
+            "Speak in a friendly and positive tone. Answer questions about their " +
+            "skills, projects, internships, education, and background."
+        },
+        { role: "user", content: userMessage }
+      ]
+    });
+
+    res.json({ reply: ai.choices[0].message.content });
+  } catch (err) {
+    console.error("Chat API Error:", err);
+    res.json({ reply: "Sorry, I could not process that. Please try again." });
+  }
+});
+
+// 👉 Chat GET Route (To avoid 'Cannot GET /chat' in Browser)
+app.get("/chat", (req, res) => {
+  res.send("Chat API working! Send POST request to /chat");
+});
+
+// Default Route
 app.get('/', (req, res) => {
   res.send('Dharani Rapthadu Portfolio Backend Server is running');
 });
 
-// Get all projects
-app.get('/projects', (req, res) => {
-  res.json(projects);
-});
+// Portfolio Routes
+app.get('/projects', (req, res) => res.json(projects));
+app.get('/about', (req, res) => res.json(about));
+app.get('/skills', (req, res) => res.json(skills));
+app.get('/internships', (req, res) => res.json(internships));
 
-// Get about info
-app.get('/about', (req, res) => {
-  res.json(about);
-});
-
-// Get skills
-app.get('/skills', (req, res) => {
-  res.json(skills);
-});
-
-// Get internships
-app.get('/internships', (req, res) => {
-  res.json(internships);
-});
-
-// Start server
+// Start Server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
 
 export default app;
