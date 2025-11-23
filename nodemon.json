@@ -1,4 +1,0 @@
-{
-  "watch": ["server.js", "data.js"],
-  "ext": "js,json"
-}
