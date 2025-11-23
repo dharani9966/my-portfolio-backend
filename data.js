@@ -1,6 +1,4 @@
 // data.js
-
-
 export const projects = [
   {
     id: 1,
@@ -18,22 +16,13 @@ export const projects = [
   }
 ];
 
-
-// Personal About Information
-
 export const about = {
   name: "Dharani Rapthadu",
   email: "dharaniraptadu@gmail.com",
   contact: "7569835878",
-  address: "Ananthapur,andrapradesh,",
-  education: [
-    {
-      postGraduation: "Master Of Computer Applications",
-      institution: "Jawaharlal Nehru Technological University,Anantapur",
-      year: "2026",
-    }
-  ],
-  professionalSummary:"Aspiring Java Backend Developer with strong foundation in Spring Boot, REST API development, and database management. Passionate about building scalable and maintainable backend systems. Seeking opportunities to contribute to innovative projects and grow professionally in backend development roles."
+  address: "Ananthapur, Andhra Pradesh",
+  professionalSummary:
+    "Aspiring Java Backend Developer with strong foundation in Spring Boot, REST API development, and database management.",
 };
 
 export const skills = [
@@ -47,14 +36,11 @@ export const skills = [
   "JavaScript"
 ];
 
-
-
 export const internships = [
   {
     organization: "IndiVillage Foundation",
     role: "Intern",
-    description: "At Indie Village Foundation, you contributed to empowering rural children through storytelling programs, STEM education for girls, and digital learning initiatives. Your role focused on improving learning outcomes, mentoring students, and supporting program delivery across schools and communities."
+    description:
+      "At IndiVillage Foundation, contributed to empowering rural children through storytelling, STEM education, and digital learning."
   }
 ];
-
-

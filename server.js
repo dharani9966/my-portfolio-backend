@@ -9,7 +9,7 @@ import OpenAI from "openai";
 
 const app = express();
 
-// Railway allows only dynamic port
+// Railway dynamic port
 const PORT = process.env.PORT || 5000;
 
 // Middleware
@@ -32,9 +32,7 @@ app.post("/chat", async (req, res) => {
         {
           role: "system",
           content:
-            "You are Dharani Rapthadu’s portfolio AI assistant. " +
-            "Speak in a friendly and positive tone. Answer questions about their " +
-            "skills, projects, internships, education, and background."
+            "You are Dharani Rapthadu’s portfolio AI assistant. Speak in a friendly and positive tone."
         },
         { role: "user", content: userMessage }
       ]
@@ -47,14 +45,9 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-// 👉 Chat GET Route (To avoid 'Cannot GET /chat' in Browser)
+// GET route (to verify backend working)
 app.get("/chat", (req, res) => {
   res.send("Chat API working! Send POST request to /chat");
-});
-
-// Default Route
-app.get('/', (req, res) => {
-  res.send('Dharani Rapthadu Portfolio Backend Server is running');
 });
 
 // Portfolio Routes
@@ -63,9 +56,14 @@ app.get('/about', (req, res) => res.json(about));
 app.get('/skills', (req, res) => res.json(skills));
 app.get('/internships', (req, res) => res.json(internships));
 
+// Default Route
+app.get('/', (req, res) => {
+  res.send('Dharani Rapthadu Portfolio Backend Server is running');
+});
+
 // Start Server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log('Server running on port ${PORT}');
 });
 
 export default app;
